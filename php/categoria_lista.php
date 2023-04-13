@@ -1,6 +1,6 @@
 <?php
-	$inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
-	$tabla="";
+$inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
+$tabla="";
 
 	if(isset($busqueda) && $busqueda!=""){
 
@@ -10,7 +10,7 @@
 
 	}else{
 
-		$consulta_datos="SELECT * FROM categoria ORDER BY categoria_nombre ASC LIMIT $inicio,$registros";
+		$consulta_datos="SELECT * FROM categoria ORDER BY categoria_nombre ASC LIMIT $inicio,$registros ";
 
 		$consulta_total="SELECT COUNT(categoria_id) FROM categoria";
 		

@@ -1,7 +1,8 @@
 <?php
     //conexion a la base de datos//
     function conexion(){
-        $pdo= new PDO('mysql:host=localhost;dbname=inventario','root',''); //nueva instancia que sirve para PDO, estamos creando una conexion a la base de datos
+        //$pdo= new PDO('mysql:host=localhost;dbname=id20586654_inventario','id20586654_inventarios','shayeraslayerD.1312219113122191');
+		$pdo= new PDO('mysql:host=localhost;dbname=inventario','root',''); //nueva instancia que sirve para PDO, estamos creando una conexion a la base de datos
         return $pdo;
     }
 

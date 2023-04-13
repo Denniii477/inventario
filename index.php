@@ -32,4 +32,10 @@
   <img src="./img/chumchum-scream.gif" class="chumchum" alt"" width="30%">
   <img src="./img/thanos-dancing-twerking.gif" width="19%">  -->
 </body>
+<?php
+if (isset($registro)) {
+    echo "si definida";
+} else {
+    echo "no definida";
+}?>
 </html>

@@ -1,7 +1,9 @@
 <?php
+	$busqueda;
+	$registros;
 	$inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
 	$tabla="";
-
+	
 	if(isset($busqueda) && $busqueda!=""){
 
 		$consulta_datos="SELECT * FROM usuario WHERE ((usuario_id!='".$_SESSION['id']."') 
