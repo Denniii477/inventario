@@ -1,9 +1,8 @@
 <?php
 	require_once "../inc/session_start.php";
-
 	require_once "main.php";
 
-	/*== Almacenando datos ==*/
+	//Almacenando datos//
 	$codigo=limpiar_cadena($_POST['producto_codigo']);
 	$nombre=limpiar_cadena($_POST['producto_nombre']);
 
@@ -11,8 +10,7 @@
 	$stock=limpiar_cadena($_POST['producto_stock']);
 	$categoria=limpiar_cadena($_POST['producto_categoria']);
 
-
-	/*== Verificando campos obligatorios ==*/
+	//Verificando campos obligatorios//
     if($codigo=="" || $nombre=="" || $precio=="" || $stock=="" || $categoria==""){
         echo '
             <div class="notification is-danger is-light">
@@ -23,8 +21,7 @@
         exit();
     }
 
-
-    /*== Verificando integridad de los datos ==*/
+    //Verificando integridad de los datos//
     if(verificar_datos("[a-zA-Z0-9- ]{1,70}",$codigo)){
         echo '
             <div class="notification is-danger is-light">
@@ -65,10 +62,12 @@
         exit();
     }
 
-
-    /*== Verificando codigo ==*/
+    //Verificando codigo//
     $check_codigo=conexion();
-    $check_codigo=$check_codigo->query("SELECT producto_codigo FROM producto WHERE producto_codigo='$codigo'");
+    $check_codigo=$check_codigo->
+        query("SELECT producto_codigo 
+                FROM producto 
+                WHERE producto_codigo='$codigo'");
     if($check_codigo->rowCount()>0){
         echo '
             <div class="notification is-danger is-light">
@@ -80,10 +79,12 @@
     }
     $check_codigo=null;
 
-
-    /*== Verificando nombre ==*/
+    //Verificando nombre//
     $check_nombre=conexion();
-    $check_nombre=$check_nombre->query("SELECT producto_nombre FROM producto WHERE producto_nombre='$nombre'");
+    $check_nombre=$check_nombre->
+        query("SELECT producto_nombre 
+                FROM producto 
+                WHERE producto_nombre='$nombre'");
     if($check_nombre->rowCount()>0){
         echo '
             <div class="notification is-danger is-light">
@@ -95,10 +96,12 @@
     }
     $check_nombre=null;
 
-
-    /*== Verificando categoria ==*/
+    //Verificando categoria//
     $check_categoria=conexion();
-    $check_categoria=$check_categoria->query("SELECT categoria_id FROM categoria WHERE categoria_id='$categoria'");
+    $check_categoria=$check_categoria->
+            query("SELECT categoria_id 
+                    FROM categoria 
+                    WHERE categoria_id='$categoria'");
     if($check_categoria->rowCount()<=0){
         echo '
             <div class="notification is-danger is-light">
@@ -110,15 +113,13 @@
     }
     $check_categoria=null;
 
-
-    /* Directorios de imagenes */
+    //Directorios de imagenes//
 	$img_dir='../img/producto/';
 
-
-	/*== Comprobando si se ha seleccionado una imagen ==*/
+	//Comprobando si se ha seleccionado una imagen//
 	if($_FILES['producto_foto']['name']!="" && $_FILES['producto_foto']['size']>0){
 
-        /* Creando directorio de imagenes */
+        //Creando directorio de imagenes//
         if(!file_exists($img_dir)){
             if(!mkdir($img_dir,0777)){
                 echo '
@@ -131,8 +132,9 @@
             }
         }
 
-		/* Comprobando formato de las imagenes */
-		if(mime_content_type($_FILES['producto_foto']['tmp_name'])!="image/jpeg" && mime_content_type($_FILES['producto_foto']['tmp_name'])!="image/png"){
+		//Comprobando formato de las imagenes//
+		if(mime_content_type($_FILES['producto_foto']['tmp_name'])!="image/jpeg" 
+            && mime_content_type($_FILES['producto_foto']['tmp_name'])!="image/png"){
 			echo '
 	            <div class="notification is-danger is-light">
 	                <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -142,8 +144,7 @@
 	        exit();
 		}
 
-
-		/* Comprobando que la imagen no supere el peso permitido */
+		//Comprobando que la imagen no supere el peso permitido//
 		if(($_FILES['producto_foto']['size']/1024)>3072){
 			echo '
 	            <div class="notification is-danger is-light">
@@ -154,8 +155,7 @@
 			exit();
 		}
 
-
-		/* extencion de las imagenes */
+		//Extencion de las imagenes//
 		switch(mime_content_type($_FILES['producto_foto']['tmp_name'])){
 			case 'image/jpeg':
 			  $img_ext=".jpg";
@@ -165,16 +165,16 @@
 			break;
 		}
 
-		/* Cambiando permisos al directorio */
+		//Cambiando permisos al directorio//
 		chmod($img_dir, 0777);
 
-		/* Nombre de la imagen */
+		//Nombre de la imagen//
 		$img_nombre=renombrar_fotos($nombre);
 
-		/* Nombre final de la imagen */
+		//Nombre final de la imagen//
 		$foto=$img_nombre.$img_ext;
 
-		/* Moviendo imagen al directorio */
+		//Moviendo imagen al directorio//
 		if(!move_uploaded_file($_FILES['producto_foto']['tmp_name'], $img_dir.$foto)){
 			echo '
 	            <div class="notification is-danger is-light">
@@ -189,10 +189,11 @@
 		$foto="";
 	}
 
-
-	/*== Guardando datos ==*/
+	//Guardando datos//
     $guardar_producto=conexion();
-    $guardar_producto=$guardar_producto->prepare("INSERT INTO producto(producto_codigo,producto_nombre,producto_precio,producto_stock,producto_foto,categoria_id,usuario_id) VALUES(:codigo,:nombre,:precio,:stock,:foto,:categoria,:usuario)");
+    $guardar_producto=$guardar_producto->
+        prepare("INSERT INTO producto(producto_codigo,producto_nombre,producto_precio,producto_stock,producto_foto,categoria_id,usuario_id) 
+                    VALUES(:codigo,:nombre,:precio,:stock,:foto,:categoria,:usuario)");
 
     $marcadores=[
         ":codigo"=>$codigo,

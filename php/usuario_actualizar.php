@@ -1,14 +1,16 @@
 <?php
 	require_once "../inc/session_start.php";
-
 	require_once "main.php";
 
-    /*== Almacenando id ==*/
+    //Almacenando id//
     $id=limpiar_cadena($_POST['usuario_id']);
 
     /*== Verificando usuario ==*/
 	$check_usuario=conexion();
-	$check_usuario=$check_usuario->query("SELECT * FROM usuario WHERE usuario_id='$id'");
+	$check_usuario=$check_usuario->
+        query("SELECT * 
+                 FROM usuario 
+                WHERE usuario_id='$id'");
 
     if($check_usuario->rowCount()<=0){
     	echo '
@@ -23,13 +25,11 @@
     }
     $check_usuario=null;
 
-
-    /*== Almacenando datos del administrador ==*/
+    //Almacenando datos del administrador//
     $admin_usuario=limpiar_cadena($_POST['administrador_usuario']);
     $admin_clave=limpiar_cadena($_POST['administrador_clave']);
 
-
-    /*== Verificando campos obligatorios del administrador ==*/
+    //Verificando campos obligatorios del administrador//
     if($admin_usuario=="" || $admin_clave==""){
         echo '
             <div class="notification is-danger is-light">
@@ -40,7 +40,7 @@
         exit();
     }
 
-    /*== Verificando integridad de los datos (admin) ==*/
+    //Verificando integridad de los datos (admin)//
     if(verificar_datos("[a-zA-Z0-9]{4,20}",$admin_usuario)){
         echo '
             <div class="notification is-danger is-light">
@@ -61,15 +61,19 @@
         exit();
     }
 
-
-    /*== Verificando el administrador en DB ==*/
+    //Verificando el administrador en DB//
     $check_admin=conexion();
-    $check_admin=$check_admin->query("SELECT usuario_usuario,usuario_clave FROM usuario WHERE usuario_usuario='$admin_usuario' AND usuario_id='".$_SESSION['id']."'");
+    $check_admin=$check_admin->
+        query("SELECT usuario_usuario,usuario_clave 
+                 FROM usuario 
+                WHERE usuario_usuario='$admin_usuario' 
+                  AND usuario_id='".$_SESSION['id']."'");
     if($check_admin->rowCount()==1){
 
     	$check_admin=$check_admin->fetch();
 
-    	if($check_admin['usuario_usuario']!=$admin_usuario || !password_verify($admin_clave, $check_admin['usuario_clave'])){
+    	if($check_admin['usuario_usuario']!=$admin_usuario || 
+            !password_verify($admin_clave, $check_admin['usuario_clave'])){
     		echo '
 	            <div class="notification is-danger is-light">
 	                <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -90,8 +94,7 @@
     }
     $check_admin=null;
 
-
-    /*== Almacenando datos del usuario ==*/
+    //Almacenando datos del usuario//
     $nombre=limpiar_cadena($_POST['usuario_nombre']);
     $apellido=limpiar_cadena($_POST['usuario_apellido']);
 
@@ -101,8 +104,7 @@
     $clave_1=limpiar_cadena($_POST['usuario_clave_1']);
     $clave_2=limpiar_cadena($_POST['usuario_clave_2']);
 
-
-    /*== Verificando campos obligatorios del usuario ==*/
+    //Verificando campos obligatorios del usuario//
     if($nombre=="" || $apellido=="" || $usuario==""){
         echo '
             <div class="notification is-danger is-light">
@@ -113,8 +115,7 @@
         exit();
     }
 
-
-    /*== Verificando integridad de los datos (usuario) ==*/
+    //Verificando integridad de los datos (usuario)//
     if(verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}",$nombre)){
         echo '
             <div class="notification is-danger is-light">
@@ -145,12 +146,14 @@
         exit();
     }
 
-
-    /*== Verificando email ==*/
+    //Verificando email//
     if($email!="" && $email!=$datos['usuario_email']){
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             $check_email=conexion();
-            $check_email=$check_email->query("SELECT usuario_email FROM usuario WHERE usuario_email='$email'");
+            $check_email=$check_email->
+                query("SELECT usuario_email 
+                         FROM usuario 
+                        WHERE usuario_email='$email'");
             if($check_email->rowCount()>0){
                 echo '
                     <div class="notification is-danger is-light">
@@ -172,11 +175,13 @@
         } 
     }
 
-
-    /*== Verificando usuario ==*/
+    //Verificando usuario//
     if($usuario!=$datos['usuario_usuario']){
 	    $check_usuario=conexion();
-	    $check_usuario=$check_usuario->query("SELECT usuario_usuario FROM usuario WHERE usuario_usuario='$usuario'");
+	    $check_usuario=$check_usuario->
+            query("SELECT usuario_usuario 
+                     FROM usuario 
+                    WHERE usuario_usuario='$usuario'");
 	    if($check_usuario->rowCount()>0){
 	        echo '
 	            <div class="notification is-danger is-light">
@@ -189,10 +194,10 @@
 	    $check_usuario=null;
     }
 
-
-    /*== Verificando claves ==*/
+    //Verificando claves//
     if($clave_1!="" || $clave_2!=""){
-    	if(verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_1) || verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_2)){
+    	if(verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_1) || 
+            verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_2)){
 	        echo '
 	            <div class="notification is-danger is-light">
 	                <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -220,7 +225,10 @@
 
     /*== Actualizar datos ==*/
     $actualizar_usuario=conexion();
-    $actualizar_usuario=$actualizar_usuario->prepare("UPDATE usuario SET usuario_nombre=:nombre,usuario_apellido=:apellido,usuario_usuario=:usuario,usuario_clave=:clave,usuario_email=:email WHERE usuario_id=:id");
+    $actualizar_usuario=$actualizar_usuario->
+        prepare("UPDATE usuario 
+                    SET usuario_nombre=:nombre,usuario_apellido=:apellido,usuario_usuario=:usuario,usuario_clave=:clave,usuario_email=:email 
+                  WHERE usuario_id=:id");
 
     $marcadores=[
         ":nombre"=>$nombre,

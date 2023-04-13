@@ -19,7 +19,7 @@
 
 		include "./inc/btn_back.php";
 
-        /*== Verificando usuario ==*/
+        //Verificando usuario//
     	$check_usuario=conexion();
     	$check_usuario=$check_usuario->query("SELECT * FROM usuario WHERE usuario_id='$id'");
 

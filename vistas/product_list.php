@@ -7,7 +7,7 @@
     <?php
         require_once "./php/main.php";
 
-        # Eliminar producto #
+        //Eliminar producto//
         if(isset($_GET['product_id_del'])){
             require_once "./php/producto_eliminar.php";
         }
@@ -24,11 +24,11 @@
         $categoria_id = (isset($_GET['category_id'])) ? $_GET['category_id'] : 0;
 
         $pagina=limpiar_cadena($pagina);
-        $url="index.php?vista=product_list&page="; /* <== */
-        $registros=15;
+        $url="index.php?vista=product_list&page=";
+        $registros=10;
         $busqueda="";
 
-        # Paginador producto #
+        //Paginador producto//
         require_once "./php/producto_lista.php";
     ?>
 </div>

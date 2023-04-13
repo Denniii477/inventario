@@ -41,7 +41,7 @@
         </div>
     </div>
     <?php
-            # Eliminar usuario #
+            //Eliminar usuario//
             if(isset($_GET['user_id_del'])){
                 require_once "./php/usuario_eliminar.php";
             }
@@ -56,11 +56,11 @@
             }
 
             $pagina=limpiar_cadena($pagina);
-            $url="index.php?vista=user_search&page="; /* <== */
+            $url="index.php?vista=user_search&page=";
             $registros=15;
-            $busqueda=$_SESSION['busqueda_usuario']; /* <== */
+            $busqueda=$_SESSION['busqueda_usuario'];
 
-            # Paginador usuario #
+            //Paginador usuario//
             require_once "./php/usuario_lista.php";
         } 
     ?>

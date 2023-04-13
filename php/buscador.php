@@ -15,10 +15,8 @@
 
 		$modulo_buscador="busqueda_".$modulo_buscador;
 
-
-		# Iniciar busqueda #
+		//Iniciamos la busqueda//
 		if(isset($_POST['txt_buscador'])){
-
 			$txt=limpiar_cadena($_POST['txt_buscador']);
 
 			if($txt==""){
@@ -44,8 +42,7 @@
 			}
 		}
 
-
-		# Eliminar busqueda #
+		//Eliminamos la busqueda//
 		if(isset($_POST['eliminar_buscador'])){
 			unset($_SESSION[$modulo_buscador]);
 			header("Location: index.php?vista=$modulos_url",true,303); 

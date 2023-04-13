@@ -6,8 +6,7 @@
 <div class="container pb-6 pt-6">  
     <?php
         require_once "./php/main.php";
-
-        # Eliminar usuario #
+        //Eliminar usuario//
         if(isset($_GET['user_id_del'])){
             require_once "./php/usuario_eliminar.php";
         }
@@ -23,10 +22,10 @@
 
         $pagina=limpiar_cadena($pagina);
         $url="index.php?vista=user_list&page=";
-        $registros=15;  //cuantos registros por pagina quieres que se muestren
+        $registros=10;  //cuantos registros por pagina quieres que se muestren
         $busqueda="";
 
-        # Paginador usuario #
+        //Paginador usuario//
         require_once "./php/usuario_lista.php";
     ?>
 </div>

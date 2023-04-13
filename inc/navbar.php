@@ -5,7 +5,8 @@
         <img src="./img/the weas.jpg  " width="65" height="28">
         </a>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger" aria-label="menu" 
+            aria-expanded="false" data-target="navbarBasicExample">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -51,13 +52,12 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="index.php?vista=user_update&user_id_up=<?php echo $_SESSION['id']; ?>" class="button is-primary is-rounded">
-                        Mi cuenta
-                    </a>
+                    <a href="index.php?vista=user_update&user_id_up=<?php echo $_SESSION['id']; ?>" 
+                        class="button is-primary is-rounded">
+                        Mi cuenta</a>
 
                     <a href="index.php?vista=logout" class="button is-link is-rounded">
-                        Salir
-                    </a>
+                        Salir</a>
                 </div>
             </div>
         </div>

@@ -1,12 +1,15 @@
 <?php
 	require_once "main.php";
 
-	/*== Almacenando datos ==*/
+	//Almacenando datos//
     $product_id=limpiar_cadena($_POST['img_del_id']);
 
-    /*== Verificando producto ==*/
+    //Verificando producto//
     $check_producto=conexion();
-    $check_producto=$check_producto->query("SELECT * FROM producto WHERE producto_id='$product_id'");
+    $check_producto=$check_producto->
+    query("SELECT * 
+             FROM producto 
+            WHERE producto_id='$product_id'");
 
     if($check_producto->rowCount()==1){
     	$datos=$check_producto->fetch();
@@ -21,15 +24,13 @@
     }
     $check_producto=null;
 
-
-    /* Directorios de imagenes */
+    //Directorios de imagenes//
 	$img_dir='../img/producto/';
 
-	/* Cambiando permisos al directorio */
+	//Cambiando permisos al directorio//
 	chmod($img_dir, 0777);
 
-
-	/* Eliminando la imagen */
+	//Eliminando la imagen//
 	if(is_file($img_dir.$datos['producto_foto'])){
 
 		chmod($img_dir.$datos['producto_foto'], 0777);
@@ -45,11 +46,12 @@
 		}
 	}
 
-
-	/*== Actualizando datos ==*/
+	//Actualizando datos//
     $actualizar_producto=conexion();
-    $actualizar_producto=$actualizar_producto->prepare("UPDATE producto SET producto_foto=:foto WHERE producto_id=:id");
-
+    $actualizar_producto=$actualizar_producto->
+    prepare("UPDATE producto 
+                SET producto_foto=:foto 
+              WHERE producto_id=:id");
     $marcadores=[
         ":foto"=>"",
         ":id"=>$product_id

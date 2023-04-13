@@ -6,15 +6,17 @@
 <div class="container pb-6 pt-6">
 	<?php
 		include "./inc/btn_back.php";
-
 		require_once "./php/main.php";
 
 		$id = (isset($_GET['product_id_up'])) ? $_GET['product_id_up'] : 0;
 		$id=limpiar_cadena($id);
 
-		/*== Verificando producto ==*/
+		//Verificando producto//
     	$check_producto=conexion();
-    	$check_producto=$check_producto->query("SELECT * FROM producto WHERE producto_id='$id'");
+    	$check_producto=$check_producto->
+			query("SELECT * 
+				 	 FROM producto 
+					WHERE producto_id='$id'");
 
         if($check_producto->rowCount()>0){
         	$datos=$check_producto->fetch();
@@ -61,7 +63,9 @@
 				  	<select name="producto_categoria" >
 				    	<?php
     						$categorias=conexion();
-    						$categorias=$categorias->query("SELECT * FROM categoria");
+    						$categorias=$categorias->
+								query("SELECT * 
+									     FROM categoria");
     						if($categorias->rowCount()>0){
     							$categorias=$categorias->fetchAll();
     							foreach($categorias as $row){

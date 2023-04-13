@@ -42,7 +42,7 @@
     </div>
 
     <?php
-            # Eliminar categoria #
+            //Eliminar categoria//
             if(isset($_GET['category_id_del'])){
                 require_once "./php/categoria_eliminar.php";
             }
@@ -57,11 +57,11 @@
             }
 
             $pagina=limpiar_cadena($pagina);
-            $url="index.php?vista=category_search&page="; /* <== */
+            $url="index.php?vista=category_search&page=";
             $registros=15;
-            $busqueda=$_SESSION['busqueda_categoria']; /* <== */
+            $busqueda=$_SESSION['busqueda_categoria'];
 
-            # Paginador categoria #
+            //Paginador categoria//
             require_once "./php/categoria_lista.php";
         } 
     ?>

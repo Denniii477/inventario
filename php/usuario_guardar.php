@@ -1,8 +1,7 @@
-<?php
-    
+<?php 
     require_once "main.php";
 
-    /*== Almacenando datos ==*/
+    //Almacenando datos//
     $nombre=limpiar_cadena($_POST['usuario_nombre']);
     $apellido=limpiar_cadena($_POST['usuario_apellido']);
 
@@ -12,10 +11,9 @@
     $clave_1=limpiar_cadena($_POST['usuario_clave_1']);
     $clave_2=limpiar_cadena($_POST['usuario_clave_2']);
 
-
-    /*== Verificando campos obligatorios ==*/
+    //Verificando campos obligatorios//
     if($nombre=="" || $apellido=="" || $usuario=="" || $clave_1=="" || $clave_2==""){ 
-        //para que e correo sea obligatorio debemos añadirlo en el if tmabien
+        //para que el correo sea obligatorio debemos añadirlo en el if tmabien
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -25,8 +23,7 @@
         exit();
     }
 
-
-    /*== Verificando integridad de los datos ==*/
+    //Verificando integridad de los datos//
     if(verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}",$nombre)){
         echo '
             <div class="notification is-danger is-light">
@@ -57,7 +54,8 @@
         exit();
     }
 
-    if(verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_1) || verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_2)){
+    if(verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_1) ||
+        verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_2)){
         //si la clave 1 o la clave 2 no tienen el formato correcto va a dar un error
         echo '
             <div class="notification is-danger is-light">
@@ -68,12 +66,14 @@
         exit();
     }
 
-
-    /*== Verificando email ==*/
+    //Verificando email//
     if($email!=""){
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){ //con esto vemos si el correo es valido
             $check_email=conexion();
-            $check_email=$check_email->query("SELECT usuario_email FROM usuario WHERE usuario_email='$email'");
+            $check_email=$check_email->
+                query("SELECT usuario_email 
+                         FROM usuario 
+                        WHERE usuario_email='$email'");
             if($check_email->rowCount()>0){
                 echo '
                     <div class="notification is-danger is-light">
@@ -95,10 +95,12 @@
         } 
     }
 
-
-    /*== Verificando usuario ==*/
+    //Verificando usuario//
     $check_usuario=conexion();
-    $check_usuario=$check_usuario->query("SELECT usuario_usuario FROM usuario WHERE usuario_usuario='$usuario'");
+    $check_usuario=$check_usuario->
+        query("SELECT usuario_usuario 
+                 FROM usuario 
+                WHERE usuario_usuario='$usuario'");
     if($check_usuario->rowCount()>0){
         echo '
             <div class="notification is-danger is-light">
@@ -110,8 +112,7 @@
     }
     $check_usuario=null;
 
-
-    /*== Verificando claves ==*/
+    //Verificando claves//
     if($clave_1!=$clave_2){
         echo '
             <div class="notification is-danger is-light">
@@ -124,10 +125,11 @@
         $clave=password_hash($clave_1,PASSWORD_BCRYPT,["cost"=>10]);
     }
 
-
-    /*== Guardando datos ==*/
+    //Guardando datos//
     $guardar_usuario=conexion(); //llamamos a la base de datos
-    $guardar_usuario=$guardar_usuario->prepare("INSERT INTO usuario(usuario_nombre,usuario_apellido,usuario_usuario,usuario_clave,usuario_email) VALUES(:nombre,:apellido,:usuario,:clave,:email)");
+    $guardar_usuario=$guardar_usuario->
+        prepare("INSERT INTO usuario(usuario_nombre,usuario_apellido,usuario_usuario,usuario_clave,usuario_email) 
+                      VALUES (:nombre,:apellido,:usuario,:clave,:email)");
    
     $marcadores=[
         ":nombre"=>$nombre,

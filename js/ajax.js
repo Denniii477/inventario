@@ -1,7 +1,7 @@
 const formularios_ajax=document.querySelectorAll(".FormularioAjax")
 function enviar_formulario_ajax(e){
     e.preventDefault();
-    let enviar=confirm("Quieres enviar el formulario"); //mediante esto enviamos o no el el formulario
+    let enviar=confirm("Quieres enviar el formulario"); //mediante esto enviamos o no el formulario
     if(enviar==true){
         let data= new FormData(this); //enviamos datos desde el formulario
         let method=this.getAttribute("method");//recordar que con let escribimos variables

@@ -1,18 +1,38 @@
 <?php
-$inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
-$tabla="";
+	$inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
+	$tabla="";
 
 	if(isset($busqueda) && $busqueda!=""){
 
-		$consulta_datos="SELECT * FROM categoria WHERE categoria_nombre LIKE '%$busqueda%' OR categoria_ubicacion LIKE '%$busqueda%' ORDER BY categoria_nombre ASC LIMIT $inicio,$registros";
+		$consulta_datos=
+			"SELECT * 
+			   FROM categoria
+			  WHERE categoria_nombre
+			   LIKE '%$busqueda%'
+			     OR categoria_ubicacion
+			   LIKE '%$busqueda%'
+		   ORDER BY categoria_nombre
+		  ASC LIMIT $inicio,$registros";
 
-		$consulta_total="SELECT COUNT(categoria_id) FROM categoria WHERE categoria_nombre LIKE '%$busqueda%' OR categoria_ubicacion LIKE '%$busqueda%'";
+		$consulta_total=
+			"SELECT COUNT(categoria_id) 
+			   FROM categoria
+			  WHERE categoria_nombre
+			   LIKE '%$busqueda%'
+			     OR categoria_ubicacion
+			   LIKE '%$busqueda%'";
 
 	}else{
 
-		$consulta_datos="SELECT * FROM categoria ORDER BY categoria_nombre ASC LIMIT $inicio,$registros ";
+		$consulta_datos=
+			"SELECT * 
+			   FROM categoria 
+		   ORDER BY categoria_nombre 
+		  ASC LIMIT $inicio,$registros";
 
-		$consulta_total="SELECT COUNT(categoria_id) FROM categoria";
+		$consulta_total=
+			"SELECT COUNT(categoria_id)
+			   FROM categoria";
 		
 	}
 
@@ -90,7 +110,8 @@ $tabla="";
 	$tabla.='</tbody></table></div>';
 
 	if($total>0 && $pagina<=$Npaginas){
-		$tabla.='<p class="has-text-right">Mostrando categorías <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
+		$tabla.='<p class="has-text-right">Mostrando categorías <strong>'
+		.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
 	}
 
 	$conexion=null;

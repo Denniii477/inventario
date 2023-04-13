@@ -1,10 +1,9 @@
 <?php
-	/*== Almacenando datos ==*/
+	//Almacenando datos//
     $usuario=limpiar_cadena($_POST['login_usuario']);
     $clave=limpiar_cadena($_POST['login_clave']);
 
-
-    /*== Verificando campos obligatorios ==*/
+    //Verificando campos obligatorios//
     if($usuario=="" || $clave==""){
         echo '
             <div class="notification is-danger is-light">
@@ -15,8 +14,7 @@
         exit();
     }
 
-
-    /*== Verificando integridad de los datos ==*/
+    //Verificando integridad de los datos//
     if(verificar_datos("[a-zA-Z0-9]{4,20}",$usuario)){
         echo '
             <div class="notification is-danger is-light">
@@ -37,9 +35,11 @@
         exit();
     }
 
-
     $check_user=conexion();
-    $check_user=$check_user->query("SELECT * FROM usuario WHERE usuario_usuario='$usuario'");
+    $check_user=$check_user->
+        query("SELECT * 
+                FROM usuario 
+                WHERE usuario_usuario='$usuario'");
     if($check_user->rowCount()==1){
         //"->query" es para hacer consultas a la base de datos
     	$check_user=$check_user->fetch();
